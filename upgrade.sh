@@ -5,6 +5,7 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
+echo
 echo -e "The purpose of this script is to automate the upgrade from a Debian 10 server (Buster) to Debian 11 (Bullseye)."
 echo -e "Buster's EOL is around August 2022 !"
 echo
@@ -15,8 +16,9 @@ cat /etc/debian_version
 echo
 echo -e "Actual kernel version : "
 uname -mrs
+echo
 
-echo -e "Make sure your system is up to date before doing the upgrade !"
+echo -e "Making sure your system is up to date before doing the upgrade..."
 export DEBIAN_FRONTEND=noninteractive
 sudo apt update -y
 sudo apt upgrade -y
@@ -42,7 +44,7 @@ case ${answer:0:1} in
 	;;
 esac
 
-echo -e "Saving the current \"sources.list\" file and directory..."
+echo -e "Saving the current \"sources.list\" file and sources.list.d directory..."
 cp -v /etc/apt/sources.list /root/
 cp -rv /etc/apt/sources.list.d/ /root/
 
@@ -64,9 +66,11 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo apt full-upgrade -y
 
+echo
 echo -e "Upgrade will be applied after reboot. Make sure it worked by doing \"cat /etc/debian_version\" and \"uname -mrs\""
 sleep 2
 
+echo
 echo -e "The system will now reboot !"
 echo
 echo -e "3..."
